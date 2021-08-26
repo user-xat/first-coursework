@@ -295,6 +295,8 @@ class WindowApp:
             self.scatter_plotsChartRB['bg'] = '#8ae36d'
             self.lineChartRB['state'] = tk.NORMAL
             self.lineChartRB['bg'] = '#8ae36d'
+            self.scatterMatrixChartRB['state'] = tk.NORMAL
+            self.scatterMatrixChartRB['bg'] = '#8ae36d'
         elif len(self.checked_characters) == 3:
             self.scatter_plotsChartRB['state'] = tk.NORMAL
             self.scatter_plotsChartRB['bg'] = '#8ae36d'
@@ -304,6 +306,8 @@ class WindowApp:
             self.line_3dChartRB['bg'] = '#8ae36d'
             self.ternaryChartRB['state'] = tk.NORMAL
             self.ternaryChartRB['bg'] = '#8ae36d'
+            self.scatterMatrixChartRB['state'] = tk.NORMAL
+            self.scatterMatrixChartRB['bg'] = '#8ae36d'
         elif len(self.checked_characters) == 4:
             self.scatter_plotsChartRB['state'] = tk.NORMAL
             self.scatter_plotsChartRB['bg'] = '#8ae36d'
@@ -311,11 +315,15 @@ class WindowApp:
             self.scatter_3dChartRB['bg'] = '#8ae36d'
             self.ternaryChartRB['state'] = tk.NORMAL
             self.ternaryChartRB['bg'] = '#8ae36d'
+            self.scatterMatrixChartRB['state'] = tk.NORMAL
+            self.scatterMatrixChartRB['bg'] = '#8ae36d'
         elif len(self.checked_characters) == 5:
             self.scatter_3dChartRB['state'] = tk.NORMAL
             self.scatter_3dChartRB['bg'] = '#8ae36d'
             self.ternaryChartRB['state'] = tk.NORMAL
             self.ternaryChartRB['bg'] = '#8ae36d'
+            self.scatterMatrixChartRB['state'] = tk.NORMAL
+            self.scatterMatrixChartRB['bg'] = '#8ae36d'
 
     def __callback_build_button(self):
         if self.chart.get() == 1:
@@ -350,10 +358,10 @@ app = WindowApp()
 #     'Closeness': graph.closeness(),
 #     'Eigenvector_centrality': graph.eigenvector_centrality()
 # })
-# print(df['Closeness'].min())
-
+# # print(df['Closeness'].min())
+#
 # fig = px.scatter_matrix(df, dimensions=["Degree", "Eigenvector_centrality", "Betweenness", "Closeness"],
-#                         color="Class", hover_name = "Name")
+#                         color="Class", hover_name="Name")
 # fig.show()
 
 # fig = px.scatter_3d(df, x="Degree", y="PageRank", z="Eigenvector_centrality", color="Class", size="PageRank",
