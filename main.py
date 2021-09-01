@@ -1,3 +1,4 @@
+import tkinter.messagebox
 from owlread import *
 import tkinter as tk
 from tkinter import ttk
@@ -32,7 +33,6 @@ class WindowApp:
         self.pathtoowl = ''
         self.checked_characters = list()
         self.root = tk.Tk()
-        # self.root.iconphoto(False, tk.PhotoImage(file='owl.png'))
         self.root['bg'] = 'white'
         self.root.title('Визуализатор')
         self.root.wm_attributes('-alpha', 0.95)
@@ -56,14 +56,15 @@ class WindowApp:
         self.openBtn = tk.Button(self.frame, text='Открыть онтологию', command=self.__select_file)
         self.openBtn.place(relx=0.05, rely=0.05, relheight=0.11, relwidth=0.4)
 
-        # self.combo = ttk.Combobox(self.frame, values=WindowApp.CHARACTERISTICS, state='disable')
-        # self.combo.current(0)
-        # self.combo.place(relx=0.05, rely=0.25, relheight=0.11, relwidth=0.4)
-
         self.__create_characters()
         self.__create_charts()
 
-        # command=some_function - функция при нажатии на кнопку
+        self.deselectBtn = tk.Button(self.frame,
+                                     text='Оменить все',
+                                     state='disable',
+                                     command=self.__callback_deselect_all)
+        self.deselectBtn.place(relx=0.05, rely=0.75)
+
         self.buildBtn = tk.Button(self.frame, text='Построить', state='disable', command=self.__callback_build_button)
         self.buildBtn.place(relx=0.8, rely=0.85)
 
@@ -325,23 +326,31 @@ class WindowApp:
             self.scatterMatrixChartRB['state'] = tk.NORMAL
             self.scatterMatrixChartRB['bg'] = '#8ae36d'
 
+    def __callback_deselect_all(self):
+        for check in [self.degreeChBtn, self.pageRankChBtn, self.betweennessChBtn, self.closenessChBtn, self.eigCenChBtn]:
+            check.deselect()
+
     def __callback_build_button(self):
-        if self.chart.get() == 1:
-            self.chartBuild.line(self.checked_characters)
-        elif self.chart.get() == 2:
-            self.chartBuild.line_3d(self.checked_characters)
-        elif self.chart.get() == 3:
-            self.chartBuild.histogram(self.checked_characters)
-        elif self.chart.get() == 4:
-            self.chartBuild.ternary(self.checked_characters)
-        elif self.chart.get() == 5:
-            self.chartBuild.bar(self.checked_characters)
-        elif self.chart.get() == 6:
-            self.chartBuild.scatter_plots(self.checked_characters)
-        elif self.chart.get() == 7:
-            self.chartBuild.scatter_matrix(self.checked_characters)
-        elif self.chart.get() == 8:
-            self.chartBuild.scatter_3d(self.checked_characters)
+        try:
+            if self.chart.get() == 1:
+                self.chartBuild.line(self.checked_characters)
+            elif self.chart.get() == 2:
+                self.chartBuild.line_3d(self.checked_characters)
+            elif self.chart.get() == 3:
+                self.chartBuild.histogram(self.checked_characters)
+            elif self.chart.get() == 4:
+                self.chartBuild.ternary(self.checked_characters)
+            elif self.chart.get() == 5:
+                self.chartBuild.bar(self.checked_characters)
+            elif self.chart.get() == 6:
+                self.chartBuild.scatter_plots(self.checked_characters)
+            elif self.chart.get() == 7:
+                self.chartBuild.scatter_matrix(self.checked_characters)
+            elif self.chart.get() == 8:
+                self.chartBuild.scatter_3d(self.checked_characters)
+        except ValueError:
+            tkinter.messagebox.showerror(title='Ошибка',
+                                         message='Что-то пошло не так =( Попробуйте изменить порядок выбранных характеристик и попробуйте снова.')
 
 
 app = WindowApp()

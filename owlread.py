@@ -129,10 +129,6 @@ class Charts:
             fig = px.line_3d(self.df.sort_values(by=values[0]), x=values[0], y=values[1], z=values[2],
                              color='Class', hover_name='Name', labels=Charts.labels)
             fig.show()
-        # elif len(values) == 4:
-        #     fig = px.line_3d(self.df.sort_values(by=values[0]), x=values[0], y=values[1], z=values[2], color=values[3],
-        #                      hover_name='Name', symbol='Class', labels=Charts.labels)
-        #     fig.show()
 
     def ternary(self, values: list):
         if len(values) == 3:
