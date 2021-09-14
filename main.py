@@ -1,28 +1,7 @@
 import tkinter.messagebox
 from owlread import *
 import tkinter as tk
-from tkinter import ttk
 from tkinter import filedialog as fd
-
-
-# data = OwlRead.read_owl_file('social-model-biggest.owl')
-# graph = Graph.create_graph_from_onto(data)
-# print(graph.vcount())
-# print(graph.ecount())
-# temp = graph.vs['name']
-# print('PageRank', graph.pagerank())
-# # print('Degree Distribution', graph.degree_distribution())
-# print('Степень влиятельности', graph.eigenvector_centrality())
-# print('Степень близости', graph.closeness())
-# print('Степень посредничества', graph.betweenness())
-# print('Degree', graph.degree())
-# print('Diameter', graph.diameter())
-# print('Radius', graph.radius())
-# print(graph)
-# temp = graph.degree()
-# temp = np.array(temp)
-# histo = go.Histogram(x=temp)
-# fig = go.Figure(data=[histo])
 
 
 class WindowApp:
@@ -64,7 +43,8 @@ class WindowApp:
                                        command=self.__callback_deselect_all)
         self.__deselectBtn.place(relx=0.05, rely=0.75)
 
-        self.__buildBtn = tk.Button(self.__frame, text='Построить', state='disable', command=self.__callback_build_button)
+        self.__buildBtn = tk.Button(self.__frame, text='Построить', state='disable',
+                                    command=self.__callback_build_button)
         self.__buildBtn.place(relx=0.8, rely=0.85)
 
         self.__root.mainloop()
@@ -72,7 +52,7 @@ class WindowApp:
     def __create_characters(self):
         self.__degree = tk.BooleanVar()
         self.__degreeChBtn = tk.Checkbutton(self.__frame,
-                                            text='Степени вершин',
+                                            text='Центральность по степени',
                                             variable=self.__degree,
                                             offvalue=False,
                                             onvalue=True,
@@ -94,7 +74,7 @@ class WindowApp:
 
         self.__betweenness = tk.BooleanVar()
         self.__betweennessChBtn = tk.Checkbutton(self.__frame,
-                                                 text='Степень посредничества',
+                                                 text='Центральность по посредничеству',
                                                  variable=self.__betweenness,
                                                  offvalue=False,
                                                  onvalue=True,
@@ -105,7 +85,7 @@ class WindowApp:
 
         self.__closeness = tk.BooleanVar()
         self.__closenessChBtn = tk.Checkbutton(self.__frame,
-                                               text='Степень близости',
+                                               text='Центральность по близости',
                                                variable=self.__closeness,
                                                offvalue=False,
                                                onvalue=True,
@@ -276,7 +256,8 @@ class WindowApp:
 
     def __check_chart_build(self):
         self.__chart.set(0)
-        for rb in [self.__lineChartRB, self.__scatterMatrixChartRB, self.__scatter_plotsChartRB, self.__scatter_3dChartRB,
+        for rb in [self.__lineChartRB, self.__scatterMatrixChartRB, self.__scatter_plotsChartRB,
+                   self.__scatter_3dChartRB,
                    self.__histogramChartRB, self.__barChartRB, self.__line_3dChartRB, self.__ternaryChartRB]:
             rb['state'] = tk.DISABLED
             rb['bg'] = 'white'
@@ -326,8 +307,11 @@ class WindowApp:
             self.__scatterMatrixChartRB['bg'] = '#8ae36d'
 
     def __callback_deselect_all(self):
-        for check in [self.__degreeChBtn, self.__pageRankChBtn, self.__betweennessChBtn, self.__closenessChBtn, self.__eigCenChBtn]:
+        for check in [self.__degreeChBtn, self.__pageRankChBtn, self.__betweennessChBtn, self.__closenessChBtn,
+                      self.__eigCenChBtn]:
             check.deselect()
+        self.__checked_characters.clear()
+        self.__check_chart_build()
 
     def __callback_build_button(self):
         try:
@@ -352,35 +336,5 @@ class WindowApp:
                                          message='Что-то пошло не так =( Попробуйте изменить порядок выбранных характеристик и попробуйте снова.')
 
 
-app = WindowApp()
-
-# data = OwlRead.read_owl_file('social-model-biggest.owl')
-# graph = Graph.create_graph_from_onto(data)
-#
-# df = pd.DataFrame({
-#     'Name': graph.vs['name'],
-#     'Class': graph.vs['class'],
-#     'Degree': graph.degree(),
-#     'PageRank': graph.pagerank(),
-#     'Betweenness': graph.betweenness(),
-#     'Closeness': graph.closeness(),
-#     'Eigenvector_centrality': graph.eigenvector_centrality()
-# })
-# # print(df['Closeness'].min())
-#
-# fig = px.scatter_matrix(df, dimensions=["Degree", "Eigenvector_centrality", "Betweenness", "Closeness"],
-#                         color="Class", hover_name="Name")
-# fig.show()
-
-# fig = px.scatter_3d(df, x="Degree", y="PageRank", z="Eigenvector_centrality", color="Class", size="PageRank",
-#                     hover_name="Name")
-# fig.show()
-
-# fig = px.scatter(df, x="PageRank", y="Eigenvector_centrality", color='Class', hover_name='Name', size='Degree')
-# fig.show()
-
-# fig = px.histogram(df, x="Degree", color="Class")
-# fig.show()
-
-# fig = px.bar(df, y='Degree', hover_name='Name', color='Class', orientation='h')
-# fig.show()
+if __name__ == '__main__':
+    app = WindowApp()

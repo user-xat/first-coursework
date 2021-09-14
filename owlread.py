@@ -1,9 +1,6 @@
 import owlready2 as owl
 import igraph as ig
-import numpy as np
 import pandas as pd
-import plotly
-import plotly.graph_objs as go
 import plotly.express as px
 
 
@@ -54,10 +51,10 @@ class OwlRead:
 class Charts:
     __LABELS = {
         'Class': 'Класс',
-        'Degree': 'Степени вершин',
+        'Degree': 'Центральность по степени',
         'PageRank':'PageRank',
-        'Betweenness': 'Степень посредничества',
-        'Closeness': 'Степень близости',
+        'Betweenness': 'Центральность по посредничеству',
+        'Closeness': 'Центральность по близости',
         'Eigenvector_centrality': 'Степень влиятельности'
     }
 
@@ -133,10 +130,6 @@ class Charts:
             fig = px.line_3d(self.__df.sort_values(by=values[0]), x=values[0], y=values[1], z=values[2],
                              color='Class', hover_name='Name', symbol='Class', labels=Charts.__LABELS)
             fig.show()
-        # elif len(values) == 4:
-        #     fig = px.line_3d(self.df.sort_values(by=values[0]), x=values[0], y=values[1], z=values[2], color=values[3],
-        #                      hover_name='Name', symbol='Class', labels=Charts.labels)
-        #     fig.show()
 
     def ternary(self, values: list):
         if len(values) == 3:
