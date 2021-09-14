@@ -1,5 +1,5 @@
 import tkinter.messagebox
-from owlread import *
+from charts import *
 import tkinter as tk
 from tkinter import filedialog as fd
 
