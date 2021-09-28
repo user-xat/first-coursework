@@ -1,6 +1,7 @@
 from owlread import *
 import pandas as pd
 import plotly.express as px
+import openpyxl
 
 
 class Charts:
@@ -24,6 +25,41 @@ class Charts:
             'Closeness': self.__graph.closeness(),
             'Eigenvector_centrality': self.__graph.eigenvector_centrality()
         })
+
+    def save_to_excel(self) -> None:
+        book = openpyxl.Workbook()
+        sheet = book.active
+
+        sheet['A1'] = 'Узлы'
+        sheet['B1'] = 'Класс'
+        sheet['C1'] = 'Центральность по степени'
+        sheet['D1'] = 'PageRank'
+        sheet['E1'] = 'Центральность по посредничеству'
+        sheet['F1'] = 'Центральность по близости'
+        sheet['G1'] = 'Степень влиятельности'
+
+        row = 2
+        for _, trow in self.__df.iterrows():
+            if trow['Class'] == 'Person':
+                link = 'https://vk.com/id' + trow['Name']
+            elif trow['Class'] == 'Community':
+                link = 'https://vk.com/public' + trow['Name']
+            elif trow['Class'] == 'Post':
+                link = 'https://vk.com/wall' + trow['Name']
+            else:
+                link = trow['Name']
+
+            sheet[row][0].value = link
+            sheet[row][1].value = trow['Class']
+            sheet[row][2].value = trow['Degree']
+            sheet[row][3].value = trow['PageRank']
+            sheet[row][4].value = trow['Betweenness']
+            sheet[row][5].value = trow['Closeness']
+            sheet[row][6].value = trow['Eigenvector_centrality']
+            row += 1
+
+        book.save("data.xlsx")
+        book.close()
 
     def scatter_plots(self, values: list):
         if len(values) == 2:

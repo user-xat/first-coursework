@@ -35,6 +35,10 @@ class WindowApp:
         self.__openBtn = tk.Button(self.__frame, text='Открыть онтологию', command=self.__select_file)
         self.__openBtn.place(relx=0.05, rely=0.05, relheight=0.11, relwidth=0.4)
 
+        self.__saveDataBtn = tk.Button(self.__frame, text='Выгрузить данные в EXCEL', state='disable',
+                                       command=self.__callback_save_data_button)
+        self.__saveDataBtn.place(relx=0.05, rely=0.85)
+
         self.__create_characters()
         self.__create_charts()
 
@@ -190,15 +194,16 @@ class WindowApp:
             initialdir='/',
             filetypes=filetypes
         )
-
-        self.__chartBuild = Charts(self.__pathtoowl)
-
         if self.__pathtoowl != '':
-            self.__degreeChBtn['state'] = tk.NORMAL
-            self.__pageRankChBtn['state'] = tk.NORMAL
-            self.__betweennessChBtn['state'] = tk.NORMAL
-            self.__closenessChBtn['state'] = tk.NORMAL
-            self.__eigCenChBtn['state'] = tk.NORMAL
+            self.__chartBuild = Charts(self.__pathtoowl)
+
+            if self.__pathtoowl != '':
+                self.__degreeChBtn['state'] = tk.NORMAL
+                self.__pageRankChBtn['state'] = tk.NORMAL
+                self.__betweennessChBtn['state'] = tk.NORMAL
+                self.__closenessChBtn['state'] = tk.NORMAL
+                self.__eigCenChBtn['state'] = tk.NORMAL
+                self.__saveDataBtn['state'] = tk.NORMAL
 
     def __check_buildBtn(self):
         character = False
@@ -335,6 +340,8 @@ class WindowApp:
             tkinter.messagebox.showerror(title='Ошибка',
                                          message='Что-то пошло не так =( Попробуйте изменить порядок выбранных характеристик и попробуйте снова.')
 
+    def __callback_save_data_button(self):
+        self.__chartBuild.save_to_excel()
 
 if __name__ == '__main__':
     app = WindowApp()
