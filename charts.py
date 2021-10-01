@@ -77,7 +77,7 @@ class Charts:
 
     def scatter_matrix(self, values: list):
         if len(values) > 1:
-            fig = px.scatter_matrix(self.__df, dimensions=values, color="Class", labels=Charts.__LABELS)
+            fig = px.scatter_matrix(self.__df, dimensions=values, hover_name='Name', color="Class", labels=Charts.__LABELS)
             fig.show()
 
     def scatter_3d(self, values: list):
