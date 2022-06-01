@@ -5,14 +5,17 @@ import igraph as ig
 class OwlRead:
     __PROP = ['hasBirthDay', 'hasDate', 'hasDomain', 'hasFirstName', 'hasLastName', 'hasGender', 'hasName', 'hasPhoto',
               'hasTag', 'isAds']
-    __CONNECT = ['friendsWith', 'hasActivity', 'hasSubscriber', 'isRepostOf', 'liked', 'likedBy', 'posted', 'postedBy',
-                 'subscribedTo', 'viewed', 'viewedBy']
+    #__CONNECT = ['friendsWith', 'hasActivity', 'hasSubscriber', 'isRepostOf', 'liked', 'likedBy', 'posted', 'postedBy',
+    #             'subscribedTo', 'viewed', 'viewedBy']
+    __CONNECT = ['friendsWith', 'hasSubscriber', 'subscribedTo']
 
     @staticmethod
     def __read_owl_file(path) -> list:
         data = list()
         onto = owl.get_ontology("file://" + path).load()
         for oclass in onto.classes():
+            if oclass.name == "Activity" or oclass.name == "Post":
+                continue
             instances = list()
             for instance in oclass.instances():
                 properties = dict()
